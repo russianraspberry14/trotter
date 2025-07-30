@@ -306,6 +306,7 @@ const mapStyles = [
   { elementType: "geometry", stylers: [{ color: "#2d2d2d" }] },
   { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
   { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+
 ];
 
 return (
@@ -313,9 +314,7 @@ return (
     <div className="flex flex-col min-h-screen max-w-full bg-gray-50">
       {/* Navbar */}
       <div className="bg-white flex flex-row items-center justify-between mb-20 px-10 py-4 shadow-md z-10">
-        <img src="/logo.svg" className="h-10 ml-4 cursor-pointer transition-shadow duration-500 hover:drop-shadow-[2px_2px_10px_rgba(0,0,0,0.8)]" />
-        <div className="flex flex-row gap-6">
-          <button className='font-["Times New Roman"] border-2 rounded-3xl px-10 py-4 bg-[#FAAF3A] hover:bg-white hover:text-[#FAAF3A] hover:shadow-md border-[#FAAF3A] text-white text-lg transition-colors duration-500'>Features</button>
+      <img src={`${import.meta.env.BASE_URL}logo.svg`} className="h-10 ml-4 cursor-pointer transition-shadow duration-500 hover:drop-shadow-[2px_2px_10px_rgba(0,0,0,0.8)]" />        <div className="flex flex-row gap-6">
           <button className='font-["Times New Roman"] border-2 rounded-3xl px-10 py-4 bg-[#FAAF3A] hover:bg-white hover:text-[#FAAF3A] hover:shadow-md border-[#FAAF3A] text-white text-lg transition-colors duration-500'>Try it out!</button>
         </div>
       </div>

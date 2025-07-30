@@ -1,4 +1,4 @@
-TrotMate
+## TrotMate- Plan roadtrips without a headache!
 
 ## Inspiration
 

@@ -10,12 +10,12 @@ import GoogleMapsButton from './GoogleMapsButton.jsx';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyDJgcNJlKIe8TkTpXRhPQb15hSxggk_KII';
 function App() {
-  const [maxHours, setMaxHours] = useState(8); // default 8 hours
+  const [maxHours, setMaxHours] = useState(8);
   const [minStars, setMinStars] = useState(3);
-  const [maxPriceLevel, setMaxPriceLevel] = useState(3); // Google uses 0–4
+  const [maxPriceLevel, setMaxPriceLevel] = useState(3); 
   const [hotelSuggestions, setHotelSuggestions] = useState([]);
   const [selectedHotels, setSelectedHotels] = useState({});
-  const [numStops, setNumStops] = useState(2); // default to 2 stops
+  const [numStops, setNumStops] = useState(2); 
   const [restaurants, setRestaurants] = useState([]);
   const [selectedPlaces, setSelectedPlaces] = useState([]);
   const animatedComponents = makeAnimated();
@@ -53,34 +53,6 @@ function App() {
     "Lebanese",
   ];
   const options = cuisines.map(c => ({ label: c, value: c }));
-//   function getHotelStopIndices(directions, maxDriveSeconds) {
-//     if (!directions?.routes?.[0]?.legs) {
-//       console.log('No route legs available');
-//       return [];
-//     }
-    
-//     const stops = [];
-//     let cumulativeTime = 0;
-//     const legs = directions.routes[0].legs;
-    
-//     console.log(`Checking ${legs.length} legs for hotel stops. Max drive time: ${maxDriveSeconds} seconds (${maxDriveSeconds/3600} hours)`);
-  
-//     for (let i = 0; i < legs.length; i++) {
-//       const legDuration = legs[i].duration.value;
-//       cumulativeTime += legDuration;
-      
-//       console.log(`Leg ${i + 1}: ${legDuration}s, Cumulative: ${cumulativeTime}s`);
-      
-//       // If we've exceeded max drive time, suggest a hotel stop
-//       if (cumulativeTime >= maxDriveSeconds) {
-//         stops.push(i); // Stop after this leg
-//         console.log(`Hotel stop needed after leg ${i + 1}`);
-//         cumulativeTime = 0; // Reset for next segment
-//       }
-//     }
-//     console.log(`Total hotel stops needed: ${stops.length}`);
-//   return stops;
-// }
 function getHotelStopPoints(directions, maxDriveSeconds) {
   if (!directions?.routes?.[0]?.legs) {
     console.log('No route legs available');
@@ -103,7 +75,6 @@ function getHotelStopPoints(directions, maxDriveSeconds) {
       cumulativeTime += stepDuration;
 
       if (cumulativeTime >= maxDriveSeconds) {
-        // Save this step start point as a hotel stop
         const lat = typeof stepStart.lat === 'function' ? stepStart.lat() : stepStart.lat;
         const lng = typeof stepStart.lng === 'function' ? stepStart.lng() : stepStart.lng;
         stopPoints.push({ lat, lng, atTime: totalTime });
@@ -180,17 +151,7 @@ function getHotelStopPoints(directions, maxDriveSeconds) {
     }
   
     const maxDriveSeconds = maxHours * 3600;
-    // const stopIndices = getHotelStopIndices(directions, maxDriveSeconds);
-    
-    // if (stopIndices.length === 0) {
-    //   console.log(`No hotel stops needed - total drive time is less than ${maxHours} hours`);
-    //   return [];
-    // }
-  
-    // console.log(`Found ${stopIndices.length} hotel stop(s) needed at leg indices:`, stopIndices);
-    
     const suggestions = [];
-  
     const stopPoints = getHotelStopPoints(directions, maxDriveSeconds);
 
 
@@ -202,7 +163,7 @@ function getHotelStopPoints(directions, maxDriveSeconds) {
       try {
         const hotels = await fetchFilteredHotelsWithPlacesService(lat, lng, minStars, maxPriceLevel, mapRef);
         suggestions.push({
-          stopIndex: i, // not legIndex anymore
+          stopIndex: i, 
           location: { lat, lng },
           options: hotels.slice(0, 8)
         });
@@ -223,7 +184,7 @@ function getHotelStopPoints(directions, maxDriveSeconds) {
   useEffect(() => {
     if (!directions) {
       console.log('No directions available for hotel suggestions');
-      setHotelSuggestions([]); // Clear previous suggestions
+      setHotelSuggestions([]); 
       return;
     }
   
@@ -284,8 +245,7 @@ function getHotelStopPoints(directions, maxDriveSeconds) {
   
     const service = new window.google.maps.places.PlacesService(mapRef.current);
     const path = directions.routes[0].overview_path;
-  
-    // Get n nearly equally spaced points
+
     const interval = Math.floor(path.length / (numStops + 1));
     const sampledPoints = Array.from({ length: numStops }, (_, i) => path[(i + 1) * interval]);
   
@@ -303,7 +263,6 @@ function getHotelStopPoints(directions, maxDriveSeconds) {
   
         service.nearbySearch(request, (results, status) => {
           if (status === "OK" && results && results.length > 0) {
-            // sort by rating and pick top
             const topRated = results
               .filter(r => !collectedResults.has(r.place_id))
               .sort((a, b) => (b.rating || 0) - (a.rating || 0))[0];
@@ -326,7 +285,7 @@ const getRoute = () => {
   section?.scrollIntoView({ behavior: "smooth" });
   setTimeout(() => {
     document.getElementById("rest_pref")?.scrollIntoView({ behavior: "smooth" });
-  }, 2000); // delay in milliseconds
+  }, 2000); 
   directionsService.route(
     {
       origin: start,
@@ -344,11 +303,9 @@ const getRoute = () => {
   );
 };
 const mapStyles = [
-  // Example dark map style (replace with your preferred style JSON or use mapId).
   { elementType: "geometry", stylers: [{ color: "#2d2d2d" }] },
   { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
   { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-  // ... add more styling as needed
 ];
 
 return (
@@ -383,7 +340,7 @@ return (
             zoom={10}
             mapContainerStyle={{ width: "100%", height: "500px" }}
             options={{
-              styles: mapStyles, // or: mapId: "YOUR_MAP_ID",
+              styles: mapStyles, 
               disableDefaultUI: false,
               zoomControl: true,
               fullscreenControl: true,

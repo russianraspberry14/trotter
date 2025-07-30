@@ -3,11 +3,9 @@ import React from 'react';
 function GoogleMapsButton({ origin, destination, selectedHotels, selectedRestaurants }) {
     const generateGoogleMapsURL = () => {
       const base = "https://www.google.com/maps/dir/?api=1";
-  
-      // Combine hotels + restaurants into one array of waypoints
       const combinedWaypoints = [
         ...Object.values(selectedHotels),
-        ...Object.values(selectedRestaurants || {}) // if null/undefined, handle safely
+        ...Object.values(selectedRestaurants || {})
       ];
   
       // Map to lat,lng format
